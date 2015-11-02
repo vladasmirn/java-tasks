@@ -12,11 +12,11 @@ public class Notebook {
         this.colour = colour;
     }
 
-    public int GetCountOfPage() {
+    public int getCountOfPage() {
         return countOfPage;
     }
 
-    public String GetColor() {
+    public String getColor() {
         return colour;
     }
 
