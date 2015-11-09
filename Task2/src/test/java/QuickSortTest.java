@@ -33,14 +33,16 @@ public class QuickSortTest<T> {
             {QUICK_SORT, BOOK_COLOUR_COMPARATOR, new Notebook[]{}},
             {QUICK_SORT, BOOK_PAGE_COMPARATOR, new Notebook[]{new Notebook(101, "blue"), new Notebook(32, "red"), new Notebook(54, "grey"), new Notebook(77, "white")}},
             {QUICK_SORT, BOOK_COLOUR_COMPARATOR, new Notebook[]{new Notebook(55, "yellow"), new Notebook(22, "black"), new Notebook(78, "green"), new Notebook(66, "orange")}},
-            {QUICK_SORT, DOUBLE_COMPARATOR, testDoubleArray()},
-            {QUICK_SORT, DOUBLE_COMPARATOR, new Double[]{1.0, 2.0, 3.0}},// new Double[]{1.0,2.0,2.0,3.0} test failed
+            {QUICK_SORT, DOUBLE_COMPARATOR, testDoubleArray(10)},
+            {QUICK_SORT, DOUBLE_COMPARATOR, testDoubleArray(2)},
+            {QUICK_SORT, DOUBLE_COMPARATOR, testDoubleArray(0)},
+            {QUICK_SORT, DOUBLE_COMPARATOR, testDoubleArray(7)},
 
     };
 
 
-    private static Double[] testDoubleArray() {
-        Double[] array = new Double[5];
+    private static Double[] testDoubleArray(int size) {
+        Double[] array = new Double[size];
         Random rand = new Random();
 
         for (int j = 0; j < array.length; j++) {
@@ -78,7 +80,7 @@ public class QuickSortTest<T> {
 
     private boolean testAscendingOrder(T[] array, Comparator<T> comparator) {
         for (int i = 0; i < array.length - 1; i++) {
-            if ((comparator.compare(array[i], array[i + 1]) > 0) || (comparator.compare(array[i], array[i + 1]) == 0))
+            if ((comparator.compare(array[i], array[i + 1]) > 0))
                 return false;
         }
         return true;
@@ -87,15 +89,26 @@ public class QuickSortTest<T> {
     private boolean hasEachElementOf(T[] input, T[] result, Comparator<T> comparator) {
 
         for (T element : input) {
-            for (int j = 0; j < result.length; j++) {
-                if (comparator.compare(element, result[j]) == 0)
+            for (int j = 0; j < result.length - 1; j++) {
+                if ((comparator.compare(element, result[j]) == 0) && (countOfElements(result,element,j+1) == countOfElements(input,element,j+1)))
                     break;
                 if (j == result.length - 1)
                     return false;
             }
         }
+
         return true;
     }
+
+    private int countOfElements(T[]input, T elem, int pos) {
+        int count = 0, i;
+        for (i = pos; i < input.length; i++) {
+            if (input[i] == elem)
+                count++;
+        }
+        return count;
+    }
+
 }
 
 
