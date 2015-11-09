@@ -72,6 +72,7 @@ public class QuickSortTest<T> {
     @Test
     public void test() {
         T[] result = sort.sort(input, comparator);
+        //result[1] = result[2]; then for example {3.0, 1.0, 2.0, 1.0} test failed
 
         Assert.assertTrue("The array is not sorted", testAscendingOrder(result, comparator));
         Assert.assertEquals("Result array length should be equal to original", input.length, result.length);
@@ -89,8 +90,8 @@ public class QuickSortTest<T> {
     private boolean hasEachElementOf(T[] input, T[] result, Comparator<T> comparator) {
 
         for (T element : input) {
-            for (int j = 0; j < result.length - 1; j++) {
-                if ((comparator.compare(element, result[j]) == 0) && (countOfElements(result,element,j+1) == countOfElements(input,element,j+1)))
+            for (int j = 0; j < result.length; j++) {
+                if ((comparator.compare(element, result[j]) == 0) && (countOfElements(result, element) == countOfElements(input, element)))
                     break;
                 if (j == result.length - 1)
                     return false;
@@ -100,9 +101,9 @@ public class QuickSortTest<T> {
         return true;
     }
 
-    private int countOfElements(T[]input, T elem, int pos) {
+    private int countOfElements(T[] input, T elem) {
         int count = 0, i;
-        for (i = pos; i < input.length; i++) {
+        for (i = 0; i < input.length; i++) {
             if (input[i] == elem)
                 count++;
         }
